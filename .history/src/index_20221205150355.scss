@@ -186,12 +186,12 @@ input {
     border-radius: 8px;
     font-size: 14px;
     transition: all 0.1s linear;
-    @apply border-primary text-primary font-medium;
+    @apply border-primary text-primary font-medium max-sm:-bottom-[50px];
     @media screen and (min-width:640px) {
       top:0;
     }
-    @media screen and (max-width: 640px) {
-      bottom:-50px;
+    @media screen and (max-width:) {
+      
     }
     &:hover {
       @apply bg-primary text-white;
@@ -481,10 +481,7 @@ input {
 }
 @media screen and (max-width: 414px) {
   .list-product {
-    display:grid;
-    grid-template-columns: 1fr;
-    width:95%;
-    margin:0px auto;
+    @apply grid-cols-1 w-[95%] mx-auto;
   }
 }
 
@@ -492,12 +489,7 @@ input {
 .slider-product-detail {
   @apply relative w-full h-full;
   .slick-arrow {
-    position: absolute;
-    bottom:0;
-    left:50%;
-    transform: translateX(-50%);
-    padding:12px 20px;
-    @apply text-primary font-semibold rounded-lg border border-primary;
+    @apply absolute bottom-0 left-2/4 -translate-x-2/4 px-5 py-3 text-primary font-semibold rounded-lg border border-primary;
     &:hover {
       @apply bg-primary text-white;
     }
@@ -511,9 +503,7 @@ input {
   }
   .slick-list {
     width: 100%;
-    @media screen and (max-width:640px) {
-      height:470px;
-    }
+    @apply max-sm:h-[470px];
   }
   .slick-track {
     @apply flex w-full h-full;
@@ -540,15 +530,11 @@ input {
 
 ///loading
 .loading {
-  @apply flex justify-center items-center w-full;
-  gap:6px;
-  height:50px;
+  @apply flex justify-center items-center w-full gap-[6px] h-[50px];
 }
 
 .loading span {
-  width:4px;
-  height:25px;
-  background: #4c86f9;
+  @apply w-1 h-[25px] bg-[#4c86f9];
   animation: scale 0.9s ease-in-out infinite;
 }
 

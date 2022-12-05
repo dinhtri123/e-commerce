@@ -94,16 +94,10 @@ input {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width:280px;
-  height:280px;
-  @media screen and (min-width:1024px){
-    width:400px;
-    height:400px;
+  @media screen {
+    
   }
-  @media screen and (min-width:768px){
-    width:350px;
-    height:350px;
-  }
+  @apply lg:w-[400px] lg:h-[400px] md:w-[350px] md:h-[350px] sm:w-[280px] sm:h-[280px] w-[280px] h-[280px];
   border-radius: 50%;
   box-shadow: inset 0 0 50px #fff, inset 20px 0 80px #f0f,
     inset -20px 0 80px #0ff, inset 20px 0 300px #f0f, inset -20px 0 300px #0ff,
@@ -186,13 +180,7 @@ input {
     border-radius: 8px;
     font-size: 14px;
     transition: all 0.1s linear;
-    @apply border-primary text-primary font-medium;
-    @media screen and (min-width:640px) {
-      top:0;
-    }
-    @media screen and (max-width: 640px) {
-      bottom:-50px;
-    }
+    @apply border-primary text-primary font-medium sm:top-0 max-sm:-bottom-[50px];
     &:hover {
       @apply bg-primary text-white;
     }
@@ -481,10 +469,7 @@ input {
 }
 @media screen and (max-width: 414px) {
   .list-product {
-    display:grid;
-    grid-template-columns: 1fr;
-    width:95%;
-    margin:0px auto;
+    @apply grid-cols-1 w-[95%] mx-auto;
   }
 }
 
@@ -492,12 +477,7 @@ input {
 .slider-product-detail {
   @apply relative w-full h-full;
   .slick-arrow {
-    position: absolute;
-    bottom:0;
-    left:50%;
-    transform: translateX(-50%);
-    padding:12px 20px;
-    @apply text-primary font-semibold rounded-lg border border-primary;
+    @apply absolute bottom-0 left-2/4 -translate-x-2/4 px-5 py-3 text-primary font-semibold rounded-lg border border-primary;
     &:hover {
       @apply bg-primary text-white;
     }
@@ -511,9 +491,7 @@ input {
   }
   .slick-list {
     width: 100%;
-    @media screen and (max-width:640px) {
-      height:470px;
-    }
+    @apply max-sm:h-[470px];
   }
   .slick-track {
     @apply flex w-full h-full;
@@ -540,15 +518,11 @@ input {
 
 ///loading
 .loading {
-  @apply flex justify-center items-center w-full;
-  gap:6px;
-  height:50px;
+  @apply flex justify-center items-center w-full gap-[6px] h-[50px];
 }
 
 .loading span {
-  width:4px;
-  height:25px;
-  background: #4c86f9;
+  @apply w-1 h-[25px] bg-[#4c86f9];
   animation: scale 0.9s ease-in-out infinite;
 }
 

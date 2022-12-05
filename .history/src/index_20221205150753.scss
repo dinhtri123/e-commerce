@@ -546,9 +546,9 @@ input {
 }
 
 .loading span {
-  width:4px;
   height:25px;
-  background: #4c86f9;
+  background: 
+  @apply w-1 bg-[#4c86f9];
   animation: scale 0.9s ease-in-out infinite;
 }
 
