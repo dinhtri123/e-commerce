@@ -160,7 +160,7 @@ const Checkout = () => {
                     {changeIcon1 ? <IconDown></IconDown> : <IconUp></IconUp>}
                   </span>
                 </div>
-                <div className="info border max-h-[600px] overflow-hidden bg-white rounded-lg">
+                <div className="info border max-h-[0px] overflow-hidden bg-white rounded-lg">
                   <div
                     className="grid sm:grid-cols-2 gap-5 text-sm p-5 items-start"
                     autoComplete="off"
