@@ -1,0 +1,163 @@
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { NavLink, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Input from "../components/input/Input";
+import InputPassword from "../components/input/InputPassword";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  updateProfile,
+} from "firebase/auth";
+import { setDoc, doc, collection, addDoc } from "firebase/firestore";
+import { auth } from "../firebase.config";
+import { storage } from "../firebase.config";
+import { db } from "../firebase.config";
+
+import { toast } from "react-toastify";
+import ButtonLoading from "../components/button/ButtonLoading";
+
+const schema = yup.object({
+  name: yup.string().required("Please enter your full name"),
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Please enter your email address"),
+  password: yup
+    .string()
+    .required("Please enter your password")
+    .min(8, "Your password must be at least 8 characters"),
+});
+const SignUp = () => {
+  const navigate = useNavigate();
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
+
+  const onSubmit = async (values) => {
+    try {
+      const useCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      // update displayName
+      await updateProfile(auth.currentUser, {
+        displayName: values.name,
+      });
+      // tạo collection firebase
+      const colRef = collection(db, "users");
+      await addDoc(colRef, {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      });
+      toast.success("Register successfully!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+
+    console.log(values);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 5000);
+    });
+  };
+
+  return (
+    <div className="w-full h-full bg-primary bg-opacity-10">
+      <div className="container w-full h-full px-5 py-12 relative flex justify-center items-center">
+        <img src="/logo.png" alt="" className="absolute top-10 left-10" />
+        <div className="login max-w-[500px] w-full h-auto mx-auto p-10 flex flex-col items-center relative shadow-2xl rounded-lg">
+          <h4 className="text-xl font-semibold mb-2 z-10">
+            Welcome To Our Website!
+          </h4>
+          <p className="mb-5 text-sm font-medium z-10">
+            Already have an account?{" "}
+            <NavLink to={"/login"} className="text-primary">
+              Sign In
+            </NavLink>
+          </p>
+          <h3 className="text-2xl font-semibold mb-5 z-10">Sign Up</h3>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            autoComplete="off"
+            className="flex flex-col gap-5 w-[90%] z-10"
+          >
+            <Input
+              text={"Full Name*"}
+              type="text"
+              name="name"
+              placeholder="John Doe"
+              control={control}
+              error={errors.name?.message}
+            ></Input>
+            <Input
+              text="Email*"
+              type="text"
+              name="email"
+              placeholder="example@gmail.com"
+              control={control}
+              error={errors.email?.message}
+            ></Input>
+            <InputPassword
+              name="password"
+              error={errors.password?.message}
+              control={control}
+            ></InputPassword>
+            {/* <Input
+              text="File*"
+              type="file"
+              name="file"
+              control={control}
+              error={errors.file?.message}
+            ></Input> */}
+            <ButtonLoading disable={isSubmitting} loading={isSubmitting}>
+              Create an Accounts
+            </ButtonLoading>
+          </form>
+          <div className="absolute -left-[250px] -bottom-[150px] w-[450px] h-[450px] -z-10">
+            <svg
+              id="10015.io"
+              viewBox="0 0 480 480"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <path
+                fill="#474bff"
+                d="M364,309Q320,378,225.5,403.5Q131,429,105.5,334.5Q80,240,106,147Q132,54,222.5,83.5Q313,113,360.5,176.5Q408,240,364,309Z"
+              />
+            </svg>
+          </div>
+          <div className="absolute -top-[150px] -right-[250px]  w-[450px] h-[450px] -z-10">
+            <svg
+              id="10015.io"
+              viewBox="0 0 480 480"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+            >
+              <path
+                fill="#474bff"
+                d="M396.5,307.5Q318,375,229.5,393Q141,411,113.5,325.5Q86,240,123,171Q160,102,254.5,76.5Q349,51,412,145.5Q475,240,396.5,307.5Z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SignUp;
