@@ -555,7 +555,7 @@ input {
 // -----------login------
 @media screen and (max-width: 359px) {
   .login-box {
-   height: 100%;
+    @apply h-full;
   }
 }
 .login {
@@ -573,10 +573,7 @@ input {
 
 ///loading
 .loading {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  @apply flex justify-center items-center w-full;
   gap:6px;
   height:50px;
 }

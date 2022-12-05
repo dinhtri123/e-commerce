@@ -577,6 +577,7 @@ input {
   justify-content: center;
   align-items: center;
   width: 100%;
+  @apply flex justify-center items-center w-full;
   gap:6px;
   height:50px;
 }

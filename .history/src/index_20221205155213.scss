@@ -573,10 +573,8 @@ input {
 
 ///loading
 .loading {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  display
+  @apply flex justify-center items-center w-full;
   gap:6px;
   height:50px;
 }

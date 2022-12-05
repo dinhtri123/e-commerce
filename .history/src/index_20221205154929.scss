@@ -470,10 +470,14 @@ input {
   background: #ffffff;
   box-shadow: 6px 6px 12px #ebebeb, -6px -6px 12px #ffffff;
 }
-.active-pagination, .activeImg {
-  background:#4575d8;
+.active-pagination {
+  
+  @apply bg-primary;
 }
 
+.activeImg {
+  @apply bg-primary;
+}
 .scrollTop > .arrowUp {
   animation: scroll 1s linear infinite;
   @keyframes scroll {
@@ -489,21 +493,15 @@ input {
 
 @media screen and (max-width: 640px) {
   .list-product {
-    display:grid;
-    grid-template-columns: repeat(2, 1fr)
+    @apply grid-cols-2;
   }
 }
 @media screen and (max-width: 568px) {
   .list-product {
-    display:grid;
-    grid-template-columns: 1fr;
-    width:85%;
-    margin:0px auto;
+    @apply grid-cols-1 w-[85%] mx-auto;
   }
   .showPageCount {
-    display:flex;
-     flex-direction: column;
-     row-gap: 20px;
+    @apply flex-col gap-y-5;
   }
 }
 @media screen and (max-width: 414px) {
@@ -524,13 +522,9 @@ input {
     left:50%;
     transform: translateX(-50%);
     padding:12px 20px;
-    color:#4575d8;
-    font-weight:600;
-    border-radius: 8px;
-    border: 1px solid #4575d8;
+    @apply text-primary font-semibold rounded-lg border border-primary;
     &:hover {
-      background-color: #4575d8;
-      color:white;
+      @apply bg-primary text-white;
     }
   }
   .slick-prev {
@@ -547,15 +541,13 @@ input {
     }
   }
   .slick-track {
-    display:flex;
-    width: 100%;
-    height: 100%;
+    @apply flex w-full h-full;
   }
 }
 // -----------login------
 @media screen and (max-width: 359px) {
   .login-box {
-   height: 100%;
+    @apply h-full;
   }
 }
 .login {
@@ -573,10 +565,7 @@ input {
 
 ///loading
 .loading {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  @apply flex justify-center items-center w-full;
   gap:6px;
   height:50px;
 }
