@@ -23,7 +23,7 @@ const Sort = ({ onClick = () => {} }) => {
     setChangeSort(value);
     setShowSort(false);
   };
-
+ 
   return (
     <div className="relative">
       <h3 className="flex gap-x-2 items-center text-sm font-medium">
@@ -39,8 +39,9 @@ const Sort = ({ onClick = () => {} }) => {
       {showSort && (
         <div className="flex flex-col gap-y-3 absolute right-0 py-3 px-4 mt-1 border rounded-md text-sm z-10 bg-white">
           {itemSort.map((item, index) => (
-            <div onClick={handleChangeValueSort} key={index}>
+            <div onClick={handleChangeValueSort}>
               <span
+                key={index}
                 className="hover:text-primary cursor-pointer font-medium item-sort"
                 onClick={onClick}
               >

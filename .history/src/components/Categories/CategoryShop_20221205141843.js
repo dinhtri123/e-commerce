@@ -33,7 +33,7 @@ const CategoryShop = ({onClick = () => {}}) => {
                 className="flex gap-x-2 text-sm items-center py-2 px-5 text-dark font-medium cursor-pointer hover:text-primary"
                 key={index}
               >
-                <span onClick={onClick}>{category.charAt(0).toUpperCase() + category.slice(1)}</span>
+                <span onClick={onClick}>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
               </p>
             ))}
         </div>

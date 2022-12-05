@@ -1,16 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
-body {
-  @apply text-base font-normal  mx-auto;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1;
-  font-family: "Montserrat", sans-serif;
-}
-input {
-  @apply outline-none;
+@layer base {
+  
 }
 * {
   padding: 0;
@@ -621,13 +613,13 @@ input {
   max-height: 200px;
   opacity: 1;
 }
-@media screen and (max-width: 468px) {
-  .delivery {
+@media screen and (max-width:468px) {
+  .delivery{
     display: flex;
     flex-wrap: wrap;
   }
-  .delivery-item {
-    font-size: 14px;
+  .delivery-item{
+    font-size:14px;
   }
 }
 
