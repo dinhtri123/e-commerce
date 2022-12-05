@@ -43,7 +43,14 @@ input {
   z-index: 5;
   &::before {
     content: "";
-    @apply absolute bottom-0 left-0 w-full h-full bg-primary rounded-[30px] ;
+    @apply absolute 
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @apply bg-primary;
+    border-radius: 30px;
     z-index: -1;
     animation: effect 0.3s linear;
   }
@@ -79,7 +86,8 @@ input {
   }
 }
 .is-sticky {
-  @apply shadow-lg bg-white z-50;
+  @apply shadow-lg bg-white;
+  z-index: 50;
   transition: all 0.5s linear;
 }
 .nav-mobile {
@@ -359,12 +367,17 @@ input {
 // ---- intro-------
 
 .card-intro {
-  @apply relative transition-all;
+  position: relative;
+  transition: all 0.2s linear;
 
   &:before {
     content: "";
-    @apply absolute inset-0;
     z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background: linear-gradient(-45deg, #45caff 0%, #ff1b6b 100%);
     transform: translate3d(15px, 33px, 0) scale(0.95);
     filter: blur(47px);
@@ -376,7 +389,11 @@ input {
   &::after {
     content: "";
     z-index: -1;
-    @apply absolute inset-0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     background: inherit;
     border-radius: inherit;
   }
@@ -472,9 +489,16 @@ input {
 
 // -----custom slice ptoduct detail----
 .slider-product-detail {
-  @apply relative w-full h-full;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  @apply w-full;
   .slick-arrow {
-    @apply absolute bottom-0 left-2/4 -translate-x-2/4 px-5 py-3 text-primary font-semibold rounded-lg border border-primary;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    @apply px-5 py-3 text-primary font-semibold rounded-lg border border-primary;
     &:hover {
       @apply bg-primary text-white;
     }
@@ -491,7 +515,9 @@ input {
     @apply max-sm:h-[470px];
   }
   .slick-track {
-    @apply flex w-full h-full;
+    display: flex;
+    width: 100%;
+    height: 100%;
   }
 }
 // -----------login------
@@ -515,11 +541,18 @@ input {
 
 ///loading
 .loading {
-  @apply flex justify-center items-center w-full gap-[6px] h-[50px];
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 6px;
+  height: 50px;
 }
 
 .loading span {
-  @apply w-1 h-[25px] bg-[#4c86f9];
+  width: 4px;
+  height: 25px;
+  background: #4c86f9;
   animation: scale 0.9s ease-in-out infinite;
 }
 

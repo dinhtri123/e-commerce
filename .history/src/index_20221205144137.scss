@@ -515,11 +515,19 @@ input {
 
 ///loading
 .loading {
-  @apply flex justify-center items-center w-full gap-[6px] h-[50px];
+  @apply flex 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 6px;
+  height: 50px;
 }
 
 .loading span {
-  @apply w-1 h-[25px] bg-[#4c86f9];
+  width: 4px;
+  height: 25px;
+  background: #4c86f9;
   animation: scale 0.9s ease-in-out infinite;
 }
 
