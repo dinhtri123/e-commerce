@@ -10,7 +10,7 @@ const Countdown = () => {
   const [seconds, setSeconds] = useState();
   let interval;
   const countdown = () => {
-    const destination = new Date("Jan 20 2023").getTime();
+    const destination = new Date("20 2022").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const different = destination - now;
