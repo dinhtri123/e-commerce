@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Button from "../button/Button";
 
 const Countdown = () => {
+  const navigate = useNavigate();
   const [days, setDays] = useState();
   const [hours, setHours] = useState();
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
   let interval;
   const countdown = () => {
-    const destination = new Date("Dec 15 2022").getTime();
+    const destination = new Date("April 20 2023").getTime();
     interval = setInterval(() => {
       const now = new Date().getTime();
       const different = destination - now;
@@ -39,13 +40,16 @@ const Countdown = () => {
     [minutes, "MINUTES"],
     [seconds, "SECONDS"],
   ];
+  const navigationShop = () => {
+    navigate("/shop");
+    window.scrollTo(0, 0);
+  };
   return (
     <div className="w-full p-10 flex flex-col items-center justify-center gap-y-10 countdown relative mb-10">
       <div className="glitch-wrapper">
         <div className="glitch" data-glitch="SALE COUNTDOWN TIMER">
           SALE COUNTDOWN TIMER
         </div>
-        
       </div>
       <div className="flex sm:gap-x-10 gap-3">
         {timer.map((time, index) => (
@@ -62,8 +66,11 @@ const Countdown = () => {
           </div>
         ))}
       </div>
-      <Button className="w-[130px] z-10 sm:text-[14px] text-sm max-sm:py-3">
-      Visit Store
+      <Button
+        className="w-[130px] z-10 sm:text-[14px] max-sm:py-3"
+        onClick={navigationShop}
+      >
+        Visit Store
       </Button>
       <div className="blob"></div>
     </div>
