@@ -5,7 +5,10 @@ import IconMinus from "../../icons/IconMinus";
 import IconPlus from "../../icons/IconPlus";
 
 const CategoryShop = ({onClick = () => {}}) => {
-  const { data } = useSWR(`https://dummyjson.com/products/categories`, fetcher);
+  const { data } = useSWR(
+    `http://localhost:8080/api/category/getAllCate`,
+    fetcher
+  );
   const [showCategories, setShowCategories] = useState(false);
 
   const handleShowCategories = () => {
@@ -26,7 +29,7 @@ const CategoryShop = ({onClick = () => {}}) => {
         </span>
       </h3>
       {showCategories && (
-        <div className="absolute left-0 border w-full h-[400px] overflow-y-scroll mt-1 rounded-md bg-white z-10 py-3 categories-item">
+        <div className="absolute left-0 border w-full overflow-y-scroll mt-1 rounded-md bg-white z-10 py-3 categories-item">
           {data.length > 0 &&
             data.map((category, index) => (
               <p

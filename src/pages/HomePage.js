@@ -13,9 +13,13 @@ const HomePage = () => {
   useEffect(() => {
     document.title = "E-Commerce";
   }, []);
-  const { data } = useSWR("https://dummyjson.com/products", fetcher);
+  const { data } = useSWR(
+    "http://localhost:8080/api/product/AllProduct?pageNumber=1&pageSize=5",
+    fetcher
+  );
+  
   if (!data) return;
-  const products = data.products;
+  const products = data.content;
   const settings = {
     speed: 500,
     slidesToShow: 4,

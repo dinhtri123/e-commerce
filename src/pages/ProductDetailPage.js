@@ -14,27 +14,13 @@ const icons = ["/instagram.png", "/twitter.png", "/slack.png", "/meta.png"];
 const ProductDetailPage = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
-  const { data } = useSWR(`https://dummyjson.com/products/${slug}`, fetcher);
+  const { data } = useSWR(`http://localhost:8080/api/product/${slug}`, fetcher);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [data]);
   if (!data) return;
-  const {
-    id,
-    title,
-    description,
-    price,
-    rating,
-    category,
-    thumbnail,
-    images,
-    stock,
-    brand,
-  } = data;
+  const { id, name, description, price, thumbnail, categoryName } = data;
 
-  const categories = category.charAt(0).toUpperCase() + category.slice(1);
-  const remainder = Math.round(5 % rating);
-  const rate = Math.floor(rating);
 
   const settings = {
     infinite: true,
@@ -47,8 +33,8 @@ const ProductDetailPage = () => {
     dispatch(
       cartActions.addItem({
         id,
-        productName: title,
-        image: thumbnail,
+        productName: name,
+        image: thumbnail[0],
         price,
       })
     );
@@ -59,18 +45,18 @@ const ProductDetailPage = () => {
     <div className="mt-[80px]">
       <div className="container">
         <div className="bg-primary w-full p-10 text-center text-white">
-          <h3 className="text-[30px] font-medium">{categories}</h3>
+          <h3 className="text-[30px] font-medium">{name}</h3>
           <div className="flex gap-x-2 items-center justify-center mt-5">
             <p>Home</p>
             <span>/</span>
-            <p>{title}</p>
+            <p>{name}</p>
           </div>
         </div>
         <div className="grid sm:grid-cols-2 sm:gap-10 gap-[50px] justify-center w-full py-10 sm:px-[100px] px-5">
           <div className="flex overflow-hidden items-center justify-center">
             <Slider {...settings} className="slider-product-detail">
-              {images.length > 0 &&
-                images.map((item, index) => (
+              {thumbnail.length > 0 &&
+                thumbnail.map((item, index) => (
                   <div key={index} className="w-full h-full">
                     <img
                       src={item}
@@ -83,33 +69,10 @@ const ProductDetailPage = () => {
           </div>
           <div className="flex-1 flex flex-col gap-y-5">
             <h3 className="lg:text-[35px] md:text-[30px] sm:text-[28px] max-sm:text-[35px] font-semibold">
-              {title}
+              {name}
             </h3>
             <div className="flex gap-x-3 items-center">
-              <div className="flex gap-x-[2px]">
-                {Array(rate)
-                  .fill(0)
-                  .map((star, index) => (
-                    <span key={index} className="text-[#FFDE00]">
-                      <ion-icon name="star"></ion-icon>
-                    </span>
-                  ))}
-                {rate >= 4 && remainder <= 0 ? (
-                  <span className="text-[#FFDE00]">
-                    <ion-icon name="star-outline" clas></ion-icon>
-                  </span>
-                ) : (
-                  ""
-                )}
-                {Array(remainder)
-                  .fill(0)
-                  .map((star, index) => (
-                    <span key={index} className="text-[#FFDE00]">
-                      <ion-icon name="star-half-outline"></ion-icon>
-                    </span>
-                  ))}
-              </div>
-              <p className="text-sm font-medium text-dark">(No reviews)</p>
+              <div className="flex gap-x-[2px]"></div>
             </div>
             <p className="text-2xl font-medium text-error">${price}</p>
             <div className="flex flex-col gap-y-[2px] text-primary text-sm font-medium">
@@ -131,17 +94,10 @@ const ProductDetailPage = () => {
                 Add to cart
               </button>
             </div>
-            <p className="text-sm flex gap-x-3 text-dark">
-              <span className="font-semibold">Stock :</span>
-              <span>{stock}</span>
-            </p>
+
             <div className="flex gap-x-2 text-sm">
               <span className="font-semibold">Categories:</span>
-              <span>{categories}</span>
-            </div>
-            <div className="flex gap-x-2 text-sm">
-              <span className="font-semibold">Brand:</span>
-              <span>{brand}</span>
+              <span>{categoryName}</span>
             </div>
             <div className="text-sm font-semibold flex gap-x-5 items-center">
               <span>Share:</span>
@@ -158,10 +114,10 @@ const ProductDetailPage = () => {
             </div>
           </div>
         </div>
-        <div className="my-10 px-5">
+        {/* <div className="my-10 px-5">
           <Heading>Related Products</Heading>
-          <SimilarProduct categories={category} id={id}></SimilarProduct>
-        </div>
+          <SimilarProduct categories={categoryName} id={id}></SimilarProduct>
+        </div> */}
       </div>
     </div>
   );

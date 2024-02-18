@@ -9,7 +9,7 @@ import IconSearch from "../../icons/IconSearch";
 import useDebounce from "../../hooks/useDebounce";
 import IconLeft from "../../icons/IconLeft";
 
-const itemsPerPage = 12;
+const itemsPerPage = 5;
 const Product = () => {
   const [skip, setSkip] = useState(0);
   const [getCategories, setGetCategories] = useState("");
@@ -27,27 +27,34 @@ const Product = () => {
   };
   const searchDebounce = useDebounce(search, 800);
   const [url, setUrl] = useState(
-    `https://dummyjson.com/products${categories}?limit=12&skip=${skip}`
+    `http://localhost:8080/api/product/AllProduct?pageNumber=${skip}&pageSize=5`
   );
   const { data } = useSWR(url, fetcher);
   useEffect(() => {
     if (searchDebounce) {
-      setUrl(`https://dummyjson.com/products/search?q=${searchDebounce}`);
-    } else {
       setUrl(
-        `https://dummyjson.com/products${categories}?limit=12&skip=${skip}`
+        `http://localhost:8080/api/product/getProductByName?name=${searchDebounce}&pageNumber=0&pageSize=20`
+      );
+    }else if (categories) {
+      setUrl(
+        `http://localhost:8080/api/category/getProductByCate?nameCategory=${categories}&pageNumber=0&pageSize=5`
+      );
+    }else {
+      setUrl(
+        `http://localhost:8080/api/product/AllProduct?pageNumber=${skip}&pageSize=5`
       );
     }
   }, [categories, searchDebounce, skip]);
   if (!data) return;
-  const product = data?.products;
+  const product = data?.content;
 
   //calc count page
-  const pageCount = Math.ceil(data?.total / itemsPerPage);
+  // const pageCount = Math.ceil(data?.total / itemsPerPage);
 
   const handleGetProductCategories = (e) => {
     setGetCategories(e.target.textContent);
-    setCategories(`/category/${e.target.textContent}`);
+    setCategories(e.target.textContent);
+    
     setShowCategorySelect(e.target.textContent);
     setSkip(0);
   };
@@ -163,7 +170,7 @@ const Product = () => {
           <div className="flex lg:gap-x-10 gap-x-5">
             <div className="font-semibold text-dark text-sm flex items-center gap-x-2 max-sm:hidden">
             </div>
-            <div className="font-medium text-dark text-sm flex items-center">
+            {/* <div className="font-medium text-dark text-sm flex items-center">
               {search
                 ? ""
                 : `Showing ${data?.products?.length === 0 ? "0" : skip + 1} - ${
@@ -171,7 +178,7 @@ const Product = () => {
                       ? data.total
                       : skip + itemsPerPage
                   } of ${data.total} results`}
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -211,11 +218,6 @@ const Product = () => {
               })
               .map((item) => <Card key={item.id} item={item}></Card>)}
         </div>
-        {data?.products?.length === 0 && (
-          <h3 className="text-center text-[30px] text-dark font-semibold">
-            No Products Found
-          </h3>
-        )}
         {data.total < 12 || search ? (
           ""
         ) : (
@@ -223,7 +225,7 @@ const Product = () => {
             <div className="font-medium flex items-center justify-start gap-x-2 border rounded-lg px-4 py-3 bg-primary text-white">
               <p>Page :</p>
               <span>
-                {skip / itemsPerPage + 1} of {pageCount}
+                {skip + 1} 
               </span>
             </div>
             <div className="flex gap-x-5">
@@ -238,7 +240,7 @@ const Product = () => {
                 <span
                   className={`cursor-pointer ${styleArrow}`}
                   onClick={() => {
-                    setSkip(skip - itemsPerPage);
+                    setSkip(skip - 1);
                     document.documentElement.scrollTop = 0;
                   }}
                 >
@@ -257,7 +259,7 @@ const Product = () => {
                 <span
                   className={`cursor-pointer ${styleArrow}`}
                   onClick={() => {
-                    setSkip(skip + itemsPerPage);
+                    setSkip(skip + 1);
                     document.documentElement.scrollTop = 0;
                   }}
                 >

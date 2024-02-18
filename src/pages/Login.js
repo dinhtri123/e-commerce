@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
@@ -9,19 +9,19 @@ import ButtonLoading from "../components/button/ButtonLoading";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.config";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const schema = yup.object({
-  email: yup
+  name: yup
     .string()
-    .email("Invalid email address")
     .required("This field is required"),
   password: yup
     .string()
     .required("This field is required")
-    .min(8, "Password must be 8 characters"),
 });
 const Login = () => {
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const {
     control,
     handleSubmit,
@@ -31,19 +31,24 @@ const Login = () => {
     mode: "onSubmit",
   });
   const onSubmit = async (values) => {
+    console.log("🚀 ~ file: Login.js:34 ~ onSubmit ~ values:", values)
     if (!isValid) return;
+    
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-      toast.success("Successfully logged in!");
-      navigate("/");
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      console.log(data);
     } catch (error) {
-      toast.error("Your email or password is incorrect");
+      console.error("Error:", error);
     }
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 4000);
-    });
   };
   return (
     <div className="w-full h-screen bg-primary bg-opacity-10">
@@ -68,8 +73,8 @@ const Login = () => {
             <Input
               text={"Email*"}
               type="text"
-              name="email"
-              placeholder="example@gmail.com"
+              name="name"
+              placeholder="name"
               control={control}
               error={errors.email?.message}
             ></Input>
@@ -82,6 +87,7 @@ const Login = () => {
             <ButtonLoading disable={isSubmitting} loading={isSubmitting}>
               Sign In
             </ButtonLoading>
+            {isAuthenticated && "Đã đăng nhập"}
           </form>
           <div className="absolute -left-[250px] -bottom-[150px] w-[450px] h-[450px] -z-10">
             <svg

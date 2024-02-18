@@ -4,17 +4,16 @@ import { fetcher } from "../../apiConfig";
 import Card from "../card/Card";
 
 const SimilarProduct = ({categories, id}) => {
+  
   const { data } = useSWR(
-    `https://dummyjson.com/products/category/${categories}`,
+    `http://localhost:8080/api/category/getProductByCate?nameCategory=${categories}&pageNumber=0&pageSize=10`,
     fetcher
   );
   if (!data) return;
-  const product = data.products;
+  const product = data?.content;
   return (
     <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-5 py-5 mb-[50px] similar-product">
-      {product.filter(product => {
-        return product.id !== id;
-      }).map((item,index) => (
+      {product.map((item,index) => (
         <Card item={item} key={index}></Card>
       ))}
     </div>
